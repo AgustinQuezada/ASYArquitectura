@@ -1,0 +1,83 @@
+{% load static %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bootstrap 5.3.0 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <!-- bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="{% static 'app/img/logo.jpg' %}">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    function eliminarServicio(id) {
+      Swal.fire({
+        "title": "¿Estás Seguro?",
+        "text": "Esta acción no se puede deshacer",
+        "icon": "question",
+        "showCancelButton": true,
+        "cancelButtonText": "No, Cancelar",
+        "confirmButtonText": "Si, Eliminar",
+        "reverseButtons": true,
+        "confirmButtonColor": "#dc3545",
+      })
+        .then(function (result) {
+          if (result.isConfirmed) {
+            window.location.href = "/eliminar-servicio/" + id + "/"
+          }
+        })
+    }  
+  </script>
+  <!-- titulo -->
+  <title>Servicios</title>
+</head>
+
+<body class="bg-primary-subtle border border-4 d-flex justify-content-center align-items-center vh-100">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+        <div class="card mt-5 mb-5 ms-5 me-5 shadow rounded-5 bg-light-subtle">
+          <h4 class="text-center fw-bold text-secondary mt-5 display-5">Servicios</h4>
+          <h6 class="text-center fw-bold text-secondary">¡Bienvenido al registro de servicios!</h6>
+          <div class="card-body ms-4 me-4">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">id</th>
+                  <th scope="col">Nombre Servicio</th>
+                  <th scope="col">Precio Servicio</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for s in servicios %}
+                <tr>
+                  <th scope="row">{{ s.id }}</th>
+                  <td>{{ s.nombre_servicio }}</td>
+                  <td>{{ s.precio_servicio }}</td>
+                  <td>{{ s.descripcion }}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary">Editar</button>
+                    <a href="#" onclick="eliminarServicio({{ s.id }})" class="btn btn-danger text-white">Eliminar</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <hr>
+            <div class="d-flex justify-content-center">
+              <a href="{% url 'agregar-servicio' %}" class="btn btn-primary">Agregar Servicio</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>

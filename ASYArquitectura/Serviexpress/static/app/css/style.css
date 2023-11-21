@@ -1,0 +1,26 @@
+/* fuentes de google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&family=Share+Tech+Mono&display=swap');
+
+
+.seccion-clara {
+  color: black;
+  min-height: 500px;
+  padding: 40px;
+}
+
+.seccion-titulo-hero {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 50px;
+}
+
+.carousel-item img {
+  width: 100%; 
+}
+
+.seccion-oscura {
+  color: white;
+  background-color: #454545;
+  min-height: 500px;
+  padding: 10px;
+}
+

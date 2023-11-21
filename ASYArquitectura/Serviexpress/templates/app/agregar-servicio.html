@@ -1,0 +1,102 @@
+{% load static %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bootstrap 5.3.0 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <!-- bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="{% static 'app/img/logo.jpg' %}">
+  <!-- titulo -->
+  <title>Agregar Servicios</title>
+</head>
+
+
+<body class="bg-primary-subtle border border-4 d-flex justify-content-center align-items-center vh-100">
+  <br><br><br>
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-body">
+
+              <form action="" method="post" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="container">
+                  <div class="row">
+
+                    <h2 class="seccion-obra-titulo">Agregar Nuevo Servicio</h2>
+                    <hr>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="nombre_servicio" class="form-label">Nombre del Servicio</label>
+                        <input type="text" name="nombre_servicio" class="form-control" id="titulo" placeholder="Nombre">
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="precio_servicio" class="form-label">Precio</label>
+                        <input type="number" name="precio_servicio" class="form-control" id="precio"
+                          placeholder="Precio">
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <textarea class="form-control" name="descripcion" id="descripcion" rows="3"></textarea>
+                      </div>
+                    </div>
+
+                    <div>
+                      <a href="{% url 'servicios' %}">Volver</a>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <input type="submit" value="Agregar Obra" class="btn btn-primary">
+                      &nbsp;
+                      <input type="reset" value="Cancelar" class="btn btn-danger">
+                    </div>
+
+                  </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br><br><br>
+
+
+  <!-- sweet alert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    if (messages.success) {
+      Swal.fire({
+        "title": "Felicitaciones",
+        "text": "Servicio Agregado Correctamente",
+        "icon": "success",
+      })
+    }else {
+      Swal.fire({
+        "title": "Error",
+        "text": "Servicio no pudo ser agregado",
+        "icon": "",
+      })
+    }
+
+  </script>
+</body>

@@ -1,0 +1,48 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>ServiExpress | Home Admin</title>{% endblock %}
+
+
+{% block contenido %}
+<br><br><br>
+
+<body class="bg-primary-subtle">
+    <div class="container">
+        <br><br>
+        <div class="row">
+            <div class="col-3">
+                <a class="btn btn-primary rounded-5 btn-lg input-group fw-bold gap" href="{% url 'registro-cliente' %}">Gestión de Clientes</a>
+            </div>
+            <div class="col-3">
+                <a class="btn btn-primary rounded-5 btn-lg input-group fw-bold gap" href="{% url 'registro-empleado' %}">Gestión de Empleados</a>
+            </div>
+            <div class="col-3">
+                <a class="btn btn-primary rounded-5 btn-lg input-group fw-bold gap" href="{% url 'registro-cliente' %}">Gestión de Servicios</a>
+            </div>
+            <div class="col-3">
+                <a class="btn btn-primary rounded-5 btn-lg input-group fw-bold gap" href="{% url 'registro-proveedor' %}">Gestión de Proveedores</a>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-3">
+                <a class="btn btn-primary rounded-5 btn-lg input-group fw-bold gap" href="{% url 'recepcion-producto' %}">Gestión de Productos</a>
+            </div>
+            <div class="col-3">
+                <a class="btn btn-primary rounded-5 btn-lg input-group fw-bold gap" href="{% url 'registro-cliente' %}">Gestión de Pedidos</a>
+            </div>
+            <div class="col-3">
+                <a class="btn btn-primary rounded-5 btn-lg input-group fw-bold gap" href="{% url 'boleta-factura' %}">Gestión de Informes</a>
+            </div>
+            <div class="col-3">
+
+            </div>
+        </div>
+        <br><br>
+    </div>
+</body>
+
+
+{% endblock %}
