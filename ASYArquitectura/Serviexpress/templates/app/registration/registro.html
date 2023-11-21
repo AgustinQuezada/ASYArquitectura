@@ -1,0 +1,48 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>ServiExpress | Registro</title>{% endblock %}
+
+
+{% block contenido %}
+
+{% load crispy_forms_tags %}
+<div class="container">
+
+
+  <div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+      <br><br><br>
+      <div class="card">
+        <div class="card-body">
+
+          <h2>Registro</h2>
+          <hr>
+          <form action="" method="post" >
+
+            {% csrf_token %}
+            {{ form | crispy }}
+            <br>
+            <a href="{% url 'index' %}">Ir al home</a>|
+            <a href="{% url 'login' %}">Iniciar Sesión</a>
+            <div class="d-flex justify-content-center">
+              <input type="submit" value="Registrarse" class="btn btn-success">
+            </div>
+  
+            
+          </form>
+
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+</div>
+
+
+{% endblock %}

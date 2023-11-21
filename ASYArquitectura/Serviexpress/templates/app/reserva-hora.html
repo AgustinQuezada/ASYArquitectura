@@ -1,0 +1,96 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>ServiExpress | Reservar</title>{% endblock %}
+
+
+{% block contenido %}
+<br><br><br><br>
+<body style="background-color: rgb(237, 237, 237); color: rgb(164, 164, 164);"><br>
+    <div class="container"><br>
+        <div class="row">
+            <div class="col-12">
+                <div class="reserva">
+                    <div class="card bg-light-subtle shadow">
+                        <div class="card-header bg-primary-subtle">
+                            Reserva tu hora con nosotros
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Reserva de Hora ServiExpress</h5>
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="nombre" class="form-label">Ingrese su Nombre</label>
+                                            <input type="text" name="nombre" class="form-control" id="nombre"
+                                                placeholder="Nombre">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="Apellido" class="form-label">Ingrese su Apellido</label>
+                                            <input type="text" name="apellido" class="form-control" id="apellido"
+                                                placeholder="Apellido">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="Rut" class="form-label">Ingrese su Rut</label>
+                                            <input type="text" name="rut" class="form-control" id="rut"
+                                                placeholder="Rut">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="Servicio" class="form-label">Elija un Servicio</label>
+                                            <select class="form-select" name="servicio" id="servicio">
+                                                {% for s in servicios %}
+                                                <option value="{{ s.id }}">{{ s }}</option>
+                                                {% endfor %}
+                                              </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="Fecha" class="form-label">Seleccione una fecha</label>
+                                        <div class="input-group date">
+                                            <input type="date" class="form-control" id="datepicker" placeholder="Selecciona una fecha">
+                                            <div class="input-group-append">
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div><br>
+                            <button class="btn btn-primary input-group fw-bold" type="button">Reservar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+
+{% endblock %}
+
+{% block js %}
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+    // Inicializar el datepicker
+    $(document).ready(function () {
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy', // Puedes personalizar el formato de la fecha
+            language: 'es', // Puedes establecer el idioma del datepicker
+            autoclose: true
+        });
+    });
+</script>
+
+{% endblock %}
