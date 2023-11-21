@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load humanize %}
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -64,7 +64,7 @@
                       <a href="{% url 'servicios' %}">Volver</a>
                     </div>
                     <div class="d-flex justify-content-end">
-                      <input type="submit" value="Agregar Obra" class="btn btn-primary">
+                      <input type="submit" value="Agregar Servicio" class="btn btn-primary">
                       &nbsp;
                       <input type="reset" value="Cancelar" class="btn btn-danger">
                     </div>
@@ -80,23 +80,4 @@
   </section>
   <br><br><br>
 
-
-  <!-- sweet alert -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    if (messages.success) {
-      Swal.fire({
-        "title": "Felicitaciones",
-        "text": "Servicio Agregado Correctamente",
-        "icon": "success",
-      })
-    }else {
-      Swal.fire({
-        "title": "Error",
-        "text": "Servicio no pudo ser agregado",
-        "icon": "",
-      })
-    }
-
-  </script>
 </body>

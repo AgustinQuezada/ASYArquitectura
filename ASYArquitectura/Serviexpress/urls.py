@@ -15,4 +15,5 @@ urlpatterns = [
     path('servicios/', views.servicios, name='servicios'),
     path('agregar-servicio/', views.agregar_servicio, name='agregar-servicio'),
     path('eliminar-servicio/<int:id>/', views.eliminar_servicio, name='eliminar-servicio'),
+    path('editar-servicio/<int:id>/', views.editar_servicio, name='editar-servicio'),
 ]
