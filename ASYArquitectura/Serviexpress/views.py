@@ -102,7 +102,7 @@ def editar_servicio(request, id):
     return  render(request, 'app/servicios/editar-servicio.html', data)
     
 # crud reserva de hora
-# listar
+# agregar
 def reserva_hora(request):
     servicios = Servicio.objects.all()
     facturacion = Facturacion.objects.all()
@@ -111,4 +111,86 @@ def reserva_hora(request):
         'servicios': servicios,
         'facturacion': facturacion,
     }
+
+    if request.method == 'POST':
+        nombre_cliente = request.POST["nombre_cliente"]
+        apellido_cliente = request.POST["apellido_cliente"]
+        fecha = request.POST["fecha"]
+        servicio = request.POST["servicio"]
+        facturacion_cli = request.POST["facturacion"]
+
+        objServicio = Servicio.objects.get(id = servicio)
+        objFacturacion = Facturacion.objects.get(id = facturacion_cli)
+
+
+        reserva_hora = Reserva_hora.objects.create(
+            nombre_cliente = nombre_cliente,
+            apellido_cliente = apellido_cliente,
+            fecha = fecha,
+            servicio = objServicio,
+            Facturacion = objFacturacion
+        )
+
+        reserva_hora.save()
+        messages.success(request, 'Reserva exitosa')
+        return redirect(to='index')
+    
     return render(request, 'app/reserva-hora/reservar-hora.html', data) 
+
+# listar 
+def reservas(request):
+    reservas = Reserva_hora.objects.all()
+    data = {
+        'reservas': reservas
+    }
+    return render(request, 'app/reserva-hora/reservas.html', data)
+
+# editar
+def editar_reserva(request, id):
+    reserva = get_object_or_404(Reserva_hora, id=id)
+    servicios = Servicio.objects.all()
+    facturacion = Facturacion.objects.all()
+
+    if request.method == 'POST':
+        nombre_cliente = request.POST["nombre_cliente"]
+        apellido_cliente = request.POST["apellido_cliente"]
+        fecha = request.POST["fecha"]
+        servicio = request.POST["servicio"]
+        facturacion_cli = request.POST["facturacion"]
+
+        objServicio = Servicio.objects.get(id = servicio)
+        objFacturacion = Facturacion.objects.get(id = facturacion_cli)
+
+        reserva.nombre_cliente = nombre_cliente
+        reserva.apellido_cliente = apellido_cliente
+        reserva.fecha = fecha
+        reserva.servicio = objServicio
+        reserva.Facturacion = objFacturacion
+
+        reserva.save()
+        return redirect('reservas')
+    
+    data = {
+        'reserva': reserva,
+        'servicios': servicios,
+        'facturacion': facturacion,
+    }
+
+    return render(request, 'app/reserva-hora/editar-reserva.html', data)
+
+# eliminar
+def eliminar_reserva(request, id):
+    try:
+        reserva = get_object_or_404(Reserva_hora, id=id)
+        reserva.delete()
+        messages.success(request, "Eliminado Correctamente")
+        return redirect(to='reservas')
+    except:
+        messages.warning(request, "Error al eliminar")
+        reservas = Reserva_hora.objects.all()
+
+        data = {
+            'reservas': reservas,
+        }
+
+        return render(request, 'app/servicios/servicios.html', data)

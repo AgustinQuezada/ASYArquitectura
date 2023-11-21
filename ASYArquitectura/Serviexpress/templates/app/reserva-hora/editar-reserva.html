@@ -1,0 +1,95 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>ServiExpress | Editar Reserva</title>{% endblock %}
+
+
+{% block contenido %}
+
+<body style="background-color: rgb(237, 237, 237); color: rgb(164, 164, 164);"><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="reserva">
+                    <div class="card bg-light-subtle shadow">
+                        <div class="card-header bg-primary-subtle">
+                            Modifica tu Reserva
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Reserva de Hora ServiExpress</h5>
+                            <form action="" method="post">
+
+                                {% csrf_token %}
+                                {% if reserva %}
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="nombre_cliente" class="form-label">Ingrese su Nombre</label>
+                                            <input type="text" name="nombre_cliente" class="form-control" id="nombre_cliente"
+                                                placeholder="Nombre" value="{{ reserva.nombre_cliente }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="apellido_cliente" class="form-label">Ingrese su Apellido</label>
+                                            <input type="text" name="apellido_cliente" class="form-control" id="apellido_cliente"
+                                                placeholder="Apellido" value="{{ reserva.apellido_cliente }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="facturacion" class="form-label">Facturación</label>
+                                            <select class="form-select" name="facturacion" id="facturacion">
+                                                {% for f in facturacion %}
+                                                  {% if f.id == reserva.Facturacion.id %}
+                                                  <option value="{{ f.id }}" selected>{{ f }}</option>
+                                                  {% else %}
+                                                  <option value="{{ f.id }}">{{ f }}</option>
+                                                  {% endif %}
+                                                {% endfor %}
+                                              </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="Servicio" class="form-label">Elija un Servicio</label>
+                                            <select class="form-select" name="servicio" id="servicio">
+                                                {% for s in servicios %}
+                                                  {% if s.id == reserva.servicio.id %}
+                                                  <option value="{{ s.id }}" selected>{{ s }}</option>
+                                                  {% else %}
+                                                  <option value="{{ s.id }}" >{{ s }}</option>
+                                                  {% endif %}
+                                                {% endfor %}
+                                              </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="Fecha" class="form-label">Seleccione una fecha</label>
+                                        <div class="input-group date">
+                                            <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Selecciona una fecha" value="{{ reserva.fecha|date:'Y-m-d' }}">
+                                            <div class="input-group-append">
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div><br>
+                            <button class="btn btn-primary input-group fw-bold" type="submit">Reservar</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+
+{% endblock %}
