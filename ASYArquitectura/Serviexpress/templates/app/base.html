@@ -29,7 +29,7 @@
       <img src={% static 'app/img/SERVIEXPRESS-removebg-preview.png' %} alt="Cmyk.cl" width="50" height="50">
       <link rel="icon" href={% static 'app/img/SERVIEXPRESS-removebg-preview.png' %}>
       <a class="nav-link active link-dark fw-semibold" style="transition: all 0.2s;" aria-current="page"
-        href="Home2.0.html">Inicio</a>
+        href="{% url 'index' %}">Inicio</a>
       <a class="nav-link active link-dark fw-semibold" style="transition: all 0.2s;" aria-current="page"
         href="#sec1">Nuestros Servicios</a>
       <a class="nav-link active link-dark fw-semibold" style="transition: all 0.2s;" aria-current="page"
@@ -57,11 +57,15 @@
         <div class="offcanvas-body ms-3">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item fw-bold">
-              <a class="nav-link" aria-current="page" href="Papeleria.html">Agenda tu cita</a>
+              <a class="nav-link" aria-current="page" href="{% url 'reserva-hora' %}">Agenda tu cita</a>
             </li>
             <hr>
             <li class="nav-item fw-bold">
-              <a class="nav-link" href="Accesorios2.0.html">Quienes somos</a>
+              <a class="nav-link" href="{% url 'reservas' %}">Reservas</a>
+            </li>
+            <hr>
+            <li class="nav-item fw-bold">
+              <a class="nav-link" aria-current="page" href="{% url 'servicios' %}">Servicios</a>
             </li><br>
             <div class="btn login fw-bold">
               <a class="nav-link" href={% url 'login' %}>
