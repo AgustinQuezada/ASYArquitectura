@@ -45,8 +45,12 @@
                   <td>${{ s.precio_servicio | intcomma }}</td>
                   <td>{{ s.descripcion }}</td>
                   <td>
+                    {% if perms.ServiExpress.change_servicio %}
                     <a href="{% url 'editar-servicio' s.id %}" class="btn btn-success text-white">Editar</a>
+                    {% endif %}
+                    {% if perms.ServiExpress.delete_servicio %}
                     <a href="{% url 'eliminar-servicio' s.id %}" class="btn btn-danger text-white">Eliminar</a>
+                    {% endif %}
                   </td>
                 </tr>
                 {% endfor %}
@@ -54,7 +58,9 @@
             </table>
             <hr>
             <div class="d-flex justify-content-center">
+              {% if perms.ServiExpress.add_servicio %}
               <a href="{% url 'agregar-servicio' %}" class="btn btn-primary">Agregar Servicio</a>
+              {% endif %}
             </div>
             <a href="{% url 'index'%}" class="btn btn-dark">Ir al Inicio</a>
           </div>

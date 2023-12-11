@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
+from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import permission_required, login_required
 
 
 # Create your views here.
@@ -10,21 +11,36 @@ def index(request):
     context = {}
     return render(request, 'app/index.html')
 
-def login(request):
-    return render(request, 'app/login.html')
-
 def registro(request):
-    return render(request, 'registration/registro.html')
+    data = {
+        'form': CustomUserCreationForm()
+    }
+
+    if request.method == 'POST':
+        formulario = CustomUserCreationForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to='index')
+        data['form'] = formulario
+    return render(request, 'registration/registro.html', data)
 
 def homeAdmin(request):
     return render(request, 'app/homeadmin.html')
 
 def registro_cliente(request):
     return render(request, 'app/registro-cliente.html')
-    
+
+def proveedores(request):
+    return render(request, 'app/proveedor/proveedores.html')
+
+@permission_required('ServiExpress.add_proveedor')
 def registro_proveedor(request):
     return render(request, 'app/proveedor/registro-proveedor.html')
 
+def empleados(request):
+    return render(request, 'app/empleado/empleados.html')
+
+@permission_required('ServiExpress.add_empleado')
 def registro_empleado(request):
     return render(request, 'app/empleado/registro-empleado.html')
 
@@ -37,6 +53,8 @@ def boleta_factura(request):
 
 # crud servicios
 # listar
+
+@permission_required('ServiExpress.view_servicio')
 def servicios(request):
     servicios = Servicio.objects.all()
 
@@ -46,6 +64,7 @@ def servicios(request):
     return render(request, 'app/servicios/servicios.html', data)
 
 # agregar
+@permission_required('ServiExpress.add_servicio')
 def agregar_servicio(request):
 
     if request.method == 'POST':
@@ -66,6 +85,7 @@ def agregar_servicio(request):
     return render(request, 'app/servicios/agregar-servicio.html')
 
 # eliminar
+@permission_required('ServiExpress.delete_servicio')
 def eliminar_servicio(request, id):
     try:
         servicio = get_object_or_404(Servicio, id=id)
@@ -83,6 +103,7 @@ def eliminar_servicio(request, id):
         return render(request, 'app/servicios/servicios.html', data)
     
 # editar
+@permission_required('ServiExpress.change_servicio')
 def editar_servicio(request, id):
     servicio = get_object_or_404(Servicio, id=id)
     if request.method == 'POST':
@@ -103,6 +124,7 @@ def editar_servicio(request, id):
     
 # crud reserva de hora
 # agregar
+
 def reserva_hora(request):
     servicios = Servicio.objects.all()
     facturacion = Facturacion.objects.all()
@@ -138,6 +160,7 @@ def reserva_hora(request):
     return render(request, 'app/reserva-hora/reservar-hora.html', data) 
 
 # listar 
+@permission_required('ServiExpress.view_reserva_hora')
 def reservas(request):
     reservas = Reserva_hora.objects.all()
     data = {
@@ -146,6 +169,7 @@ def reservas(request):
     return render(request, 'app/reserva-hora/reservas.html', data)
 
 # editar
+@permission_required('ServiExpress.change_reserva_hora')
 def editar_reserva(request, id):
     reserva = get_object_or_404(Reserva_hora, id=id)
     servicios = Servicio.objects.all()
@@ -179,6 +203,7 @@ def editar_reserva(request, id):
     return render(request, 'app/reserva-hora/editar-reserva.html', data)
 
 # eliminar
+@permission_required('ServiExpress.delete_reserva_hora')
 def eliminar_reserva(request, id):
     try:
         reserva = get_object_or_404(Reserva_hora, id=id)
@@ -194,3 +219,4 @@ def eliminar_reserva(request, id):
         }
 
         return render(request, 'app/servicios/servicios.html', data)
+    

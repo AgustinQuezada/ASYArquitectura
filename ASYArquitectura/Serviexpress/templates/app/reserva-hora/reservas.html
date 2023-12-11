@@ -47,8 +47,12 @@
                   <td>{{ r.servicio }}</td>
                   <td>{{ r.Facturacion }}</td>
                   <td>
+                    {% if perms.ServiExpress.change_reserva_hora %}
                     <a href="{% url 'editar-reserva' r.id %}" class="btn btn-success text-white">Editar</a>
+                    {% endif %}
+                    {% if perms.ServiExpress.delete_reserva_hora %}
                     <a href="{% url 'eliminar-reserva' r.id %}" class="btn btn-danger text-white">Eliminar</a>
+                    {% endif %}
                   </td>
                 </tr>
                 {% endfor %}
@@ -56,7 +60,9 @@
             </table>
             <hr>
             <div class="d-flex justify-content-center">
+              {% if perms.ServiExpress.add_reserva_hora %}
               <a href="{% url 'reserva-hora' %}" class="btn btn-primary">Agregar Reserva</a>
+              {% endif %}
             </div>
             <a href="{% url 'index'%}" class="btn btn-dark">Ir al Inicio</a>
           </div>
