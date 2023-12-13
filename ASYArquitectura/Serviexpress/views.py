@@ -30,12 +30,89 @@ def homeAdmin(request):
 def registro_cliente(request):
     return render(request, 'app/registro-cliente.html')
 
+@permission_required('ServiExpress.view_proveedor')
 def proveedores(request):
-    return render(request, 'app/proveedor/proveedores.html')
+    proveedores = Proveedor.objects.all()
+    data = {
+        'proveedores': proveedores
+    }
+    return render(request, 'app/proveedor/proveedores.html', data)
 
 @permission_required('ServiExpress.add_proveedor')
 def registro_proveedor(request):
-    return render(request, 'app/proveedor/registro-proveedor.html')
+    rubros = Rubro_proveedor.objects.all()
+
+    data = {
+        'rubros': rubros
+    }
+
+    if request.method == 'POST':
+        nombre_proveedor = request.POST['nombre_proveedor']
+        direccion_proveedor = request.POST['direccion_proveedor']
+        telefono_proveedor = request.POST['telefono_proveedor']
+        correo_proveedor = request.POST['correo_proveedor']
+        rubro = request.POST['rubro']
+
+        objRubro = Rubro_proveedor.objects.get(id = rubro)
+
+        proveedor = Proveedor.objects.create(
+            nombre_proveedor = nombre_proveedor,
+            direccion_proveedor = direccion_proveedor,
+            telefono_proveedor = telefono_proveedor,
+            correo_proveedor = correo_proveedor,
+            rubro = objRubro
+        )
+
+        proveedor.save()
+        messages.success(request, 'Proveedor registrado correctamente')
+        return redirect(to='proveedores')
+
+
+    return render(request, 'app/proveedor/registro-proveedor.html', data)
+
+@permission_required('ServiExpress.change_proveedor')
+def editar_proveedor(request, id):
+    proveedor = get_object_or_404(Proveedor, id=id)
+    rubros = Rubro_proveedor.objects.all()
+    if request.method == 'POST':
+        nombre_proveedor = request.POST['nombre_proveedor']
+        direccion_proveedor = request.POST['direccion_proveedor']
+        telefono_proveedor = request.POST['telefono_proveedor']
+        correo_proveedor = request.POST['correo_proveedor']
+        rubro = request.POST['rubro']
+
+        objRubro = Rubro_proveedor.objects.get(id = rubro)
+
+        proveedor.nombre_proveedor = nombre_proveedor
+        proveedor.direccion_proveedor = direccion_proveedor
+        proveedor.telefono_proveedor = telefono_proveedor
+        proveedor.correo_proveedor = correo_proveedor
+        proveedor.rubro = objRubro
+
+        proveedor.save()
+        return redirect(to='proveedores')
+    data = {
+        'proveedor': proveedor,
+        'rubros': rubros
+    }
+    return render(request, 'app/proveedor/editar-proveedor.html', data)
+
+@permission_required('ServiExpress.delete_proveedor')
+def eliminar_proveedor(request, id):
+    try:
+        proveedor = get_object_or_404(Proveedor, id=id)
+        proveedor.delete()
+        messages.success(request, "Eliminado Correctamente")
+        return redirect(to='proveedores')
+    except:
+        messages.warning(request, "Error al eliminar")
+        proveedor = Proveedor.objects.all()
+
+        data = {
+            'proveedor': proveedor,
+        }
+
+        return render(request, 'app/proveedor/proveedores.html', data)
 
 @permission_required('ServiExpress.view_empleado')
 def empleados(request):

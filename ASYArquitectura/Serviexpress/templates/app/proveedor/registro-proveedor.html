@@ -19,90 +19,117 @@
 
 {% block contenido %}
 
-<body class="bg-primary-subtle border border-4 d-flex justify-content-center align-items-center vh-100">
-    <div class="container-fluid">
+<body class="bg-primary-subtle">
+    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-12">
                 <div class="card mt-5 mb-5 ms-5 me-5 shadow rounded-5 bg-light-subtle">
-                    <h4 class="text-center fw-bold text-secondary mt-5 display-5">Regístrate</h4>
-                    <h6 class="text-center fw-bold text-secondary">¡Bienvenido al registro de proveedores!</h6>
+                    <h4 class="text-center fw-bold text-secondary mt-5 display-5">Regístro de Proveedores</h4>
+                    <h6 class="text-center fw-bold text-secondary">¡Bienvenido al registro de Proveedores!</h6>
                     <div class="card-body ms-4 me-4">
-                        <form class="needs-validation" novalidate>
-                            <div class="mb-1 row">
-                                <div class="col-md-6">
+                        <form action="" method="post">
+
+                            {% csrf_token %}
+
+                            <div class="row mb-3">
+                                <div class="col-6">
                                     <div class="input-group">
+
                                         <div class="input-group-text bg-primary-subtle rounded-start-4">
                                             <i class="bi bi-person-fill"></i>
                                         </div>
-                                        <input type="text" class="form-control rounded-end-4" id="nombre"
-                                            placeholder="Ingresa tu nombre" required>
-                                        <div class="valid-feedback">Campo válido.</div>
-                                        <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+
+                                        <input type="text" name="nombre_proveedor" class="form-control rounded-end-4"
+                                            id="nombre_proveedor" placeholder="Ingresa nombre del Proveedor" required>
+
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+
+                                <div class="col-6">
                                     <div class="input-group">
+
                                         <div class="input-group-text bg-primary-subtle rounded-start-4">
-                                            <i class="bi bi-person-fill"></i>
+                                            <i class="bi bi-compass"></i>
                                         </div>
-                                        <input type="email" class="form-control rounded-end-4" id="email"
-                                            placeholder="Ingresa tus apellidos" required>
-                                        <div class="valid-feedback">Campo válido.</div>
-                                        <div class="invalid-feedback">Por favor, ingresa un campo válido.
-                                        </div>
+
+                                        <input type="text" name="direccion_proveedor" class="form-control rounded-end-4"
+                                            id="direccion_proveedor" placeholder="Ingresa dirección del proveedor"
+                                            required>
+
                                     </div>
                                 </div>
-                            </div><br>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-text rounded-start-4 bg-primary-subtle ">
-                                        <i class="bi bi-telephone-fill"></i>
-                                    </div>
-                                    <input type="password" class="form-control rounded-4 rounded-start-0"
-                                        id="confirm-password" placeholder="Ingresa tu número de teléfono"
-                                        style="height: 45px;" required>
-                                    <div class="valid-feedback">
-                                        Campo válido.
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Por favor, ingresa un numero telefonico válido.
-                                    </div>
-                                </div>
-                            </div><br>
-                            <div class="mb-1 row">
-                                <div class="col-md-6">
-                                    <select class="form-select form-select mb-1" aria-label="Large select example">
-                                        <option selected>Selecciona el rubro</option>
-                                        <option value="1">Proveedor principal</option>
-                                        <option value="2">Proveedor secundario</option>
-                                        <option value="3">Proveedor terciario</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-6">
                                     <div class="input-group">
+
                                         <div class="input-group-text bg-primary-subtle rounded-start-4">
                                             <i class="bi bi-envelope-fill"></i>
                                         </div>
-                                        <input type="text" class="form-control rounded-end-4" id="nombre"
-                                            placeholder="Ingresa tu correo" required>
-                                        <div class="valid-feedback">Campo válido.</div>
-                                        <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+
+                                        <input type="email" name="correo_proveedor" class="form-control rounded-end-4"
+                                            id="correo_proveedor" placeholder="Ingresa correo del proveedor" required>
+
                                     </div>
                                 </div>
-                            </div><br>
-                            <button type="submit"
-                                class="btn btn-primary btn-block input-group rounded-4 btn-primary fw-bold mb-3"
-                                style="height: 45px;" onclick="validar()" value="validar">Registrar</button>
-                            <button type="submit"
-                                class="btn btn-block input-group rounded-4 btn-outline-primary fw-bold"
-                                style="height: 45px;" onclick="validar()" value="validar">Guardar y cerrar</button>
-                        </form><br>
+
+                                <div class="col-6">
+                                    <div class="input-group">
+
+                                        <div class="input-group-text bg-primary-subtle rounded-start-4">
+                                            <i class="bi bi-phone"></i>
+                                        </div>
+
+                                        <input type="text" name="telefono_proveedor" class="form-control rounded-end-4"
+                                            id="telefono_proveedor" placeholder="Ingresa teléfono del proveedor"
+                                            required>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+
+                                    <label for="rubro" class="form-label">Elija un Rubro para el proveedor</label>
+                                    <select class="form-select" name="rubro" id="rubro">
+                                        {% for r in rubros %}
+                                        <option value="{{ r.id }}">{{ r }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <button type="submit"
+                                        class="btn btn-primary btn-block input-group rounded-4 btn-primary fw-bold mb-3"
+                                        style="height: 45px;">Registrar Proveedor</button>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <a href="{% url 'proveedores' %}"
+                                        class="btn btn-dark btn-block input-group rounded-4 btn-primary fw-bold mb-3"
+                                        style="height: 45px;">Volver</a>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
+
 
 {% endblock %}

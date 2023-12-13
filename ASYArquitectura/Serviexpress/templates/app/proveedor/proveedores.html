@@ -1,0 +1,76 @@
+{% load static %}
+{% load humanize %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bootstrap 5.3.0 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <!-- bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="{% static 'app/img/logo.jpg' %}">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- titulo -->
+  <title>Proveedores</title>
+</head>
+
+<body class="bg-primary-subtle border border-4 d-flex justify-content-center align-items-center vh-100">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+        <div class="card mt-5 mb-5 ms-5 me-5 shadow rounded-5 bg-light-subtle">
+          <h4 class="text-center fw-bold text-secondary mt-5 display-5">Proveedores</h4>
+          <h6 class="text-center fw-bold text-secondary">¡Bienvenido al registro de Proveedores!</h6>
+          <div class="card-body ms-4 me-4">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">id</th>
+                  <th scope="col">Nombre Proveedor</th>
+                  <th scope="col">Dirección</th>
+                  <th scope="col">Teléfono</th>
+                  <th scope="col">Correo</th>
+                  <th scope="col">Rubro</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in proveedores %}
+                <tr>
+                  <th scope="row">{{ p.id }}</th>
+                  <td>{{ p.nombre_proveedor }}</td>
+                  <td>{{ p.direccion_proveedor }}</td>
+                  <td>{{ p.telefono_proveedor }}</td>
+                  <td>{{ p.correo_proveedor }}</td>
+                  <td>{{ p.rubro }}</td>
+                  <td>
+                    {% if perms.ServiExpress.change_proveedor %}
+                    <a href="{% url 'editar-proveedor' p.id %}" class="btn btn-success text-white">Editar</a>
+                    {% endif %}
+                    {% if perms.ServiExpress.delete_proveedor %}
+                    <a href="{% url 'eliminar-proveedor' p.id %}" class="btn btn-danger text-white">Eliminar</a>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <hr>
+            <div class="d-flex justify-content-center">
+              {% if perms.ServiExpress.add_proveedor %}
+              <a href="{% url 'registro-proveedor' %}" class="btn btn-primary">Agregar Proveedor</a>
+              {% endif %}
+            </div>
+            <a href="{% url 'index'%}" class="btn btn-dark">Ir al Inicio</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
