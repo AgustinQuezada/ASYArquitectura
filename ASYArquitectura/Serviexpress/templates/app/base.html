@@ -73,25 +73,25 @@
             <hr>
             {% if perms.ServiExpress.view_reserva_hora %}
             <li class="nav-item fw-bold">
-              <a class="nav-link" href="{% url 'reservas' %}">Reservas de Horas</a>
+              <a class="nav-link" href="{% url 'reservas' %}">Control de Reservas</a>
             </li>
             <hr>
             {% endif %}
             {% if perms.ServiExpress.view_servicios %}
             <li class="nav-item fw-bold">
-              <a class="nav-link" aria-current="page" href="{% url 'servicios' %}">Servicios</a>
+              <a class="nav-link" aria-current="page" href="{% url 'servicios' %}">Control de Servicios</a>
             </li>
             <hr>
             {% endif %}
             {% if perms.ServiExpress.view_empleado %}
             <li class="nav-item fw-bold">
-              <a class="nav-link" href="{% url 'empleados' %}">Control Empleados</a>
+              <a class="nav-link" href="{% url 'empleados' %}">Control de Empleados</a>
             </li>
             <hr>
             {% endif %}
             {% if perms.ServiExpress.view_proveedor %}
             <li class="nav-item fw-bold">
-              <a class="nav-link" href="{% url 'proveedores' %}">Control Proveedores</a>
+              <a class="nav-link" href="{% url 'proveedores' %}">Control de Proveedores</a>
             </li>
             <hr>
             {% endif %}
