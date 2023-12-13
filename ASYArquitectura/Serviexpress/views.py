@@ -37,12 +37,85 @@ def proveedores(request):
 def registro_proveedor(request):
     return render(request, 'app/proveedor/registro-proveedor.html')
 
+@permission_required('ServiExpress.view_empleado')
 def empleados(request):
-    return render(request, 'app/empleado/empleados.html')
+    empleados = Empleado.objects.all()
+
+    data = {
+        'empleados': empleados
+    }
+    return render(request, 'app/empleado/empleados.html', data)
 
 @permission_required('ServiExpress.add_empleado')
 def registro_empleado(request):
+
+    if request.method == 'POST':
+        nombre_empleado = request.POST['nombre_empleado']
+        apellido_empleado = request.POST['apellido_empleado']
+        direccion_empleado = request.POST['direccion_empleado']
+        telefono_empleado = request.POST['telefono_empleado']
+        correo_empleado = request.POST['correo_empleado']
+        fecha_ingreso = request.POST['fecha_ingreso']
+        sueldo_base = request.POST['sueldo_base']
+
+        empleado = Empleado.objects.create(
+            nombre_empleado = nombre_empleado,
+            apellido_empleado = apellido_empleado,
+            direccion_empleado = direccion_empleado,
+            telefono_empleado = telefono_empleado,
+            correo_empleado =  correo_empleado,
+            fecha_ingreso = fecha_ingreso,
+            sueldo_base = sueldo_base
+        )
+
+        empleado.save()
+        messages.success(request, 'Empleado registrado correctamente')
+        return redirect(to='empleados')
     return render(request, 'app/empleado/registro-empleado.html')
+
+@permission_required('ServiExpress.change_empleado')
+def editar_empleado(request, id):
+    empleado = get_object_or_404(Empleado, id=id)
+    if request.method == 'POST':
+        nombre_empleado = request.POST['nombre_empleado']
+        apellido_empleado = request.POST['apellido_empleado']
+        direccion_empleado = request.POST['direccion_empleado']
+        telefono_empleado = request.POST['telefono_empleado']
+        correo_empleado = request.POST['correo_empleado']
+        fecha_ingreso = request.POST['fecha_ingreso']
+        sueldo_base = request.POST['sueldo_base']
+
+        empleado.nombre_empleado = nombre_empleado
+        empleado.apellido_empleado = apellido_empleado
+        empleado.direccion_empleado = direccion_empleado
+        empleado.telefono_empleado = telefono_empleado
+        empleado.correo_empleado = correo_empleado
+        empleado.fecha_ingreso = fecha_ingreso
+        empleado.sueldo_base = sueldo_base
+
+        empleado.save()
+        return redirect(to='empleados')
+    data = {
+        'empleado': empleado
+    }
+    return render(request, 'app/empleado/editar-empleado.html', data)
+
+@permission_required('ServiExpress.delete_empleado')
+def eliminar_empleado(request, id):
+    try:
+        empleado = get_object_or_404(Empleado, id=id)
+        empleado.delete()
+        messages.success(request, "Eliminado Correctamente")
+        return redirect(to='empleados')
+    except:
+        messages.warning(request, "Error al eliminar")
+        empleados = Empleado.objects.all()
+
+        data = {
+            'empleados': empleados,
+        }
+
+        return render(request, 'app/empleado/empleados.html', data)
 
 def recepcion_producto(request):
     return render(request, 'app/recepcion-producto.html')
